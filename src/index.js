@@ -62,7 +62,7 @@ class ForEachPlugin {
 		this.validator = this.ajv.compile(SCHEMA);
 
 		this.hooks = {
-			'after:package:initialize': this.replace.bind(this),
+			'before:package:initialize': this.replace.bind(this),
 		};
 
 		if (this.serverless.configSchemaHandler && this.serverless.configSchemaHandler.defineFunctionEvent) {
