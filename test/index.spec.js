@@ -400,6 +400,46 @@ describe('ForEachPlugin', function() {
 		]);
 	});
 
+	it('should support using iterators with objects as values', function() {
+		const { plugin, serverless } = createTestInstance({
+			custom: {
+				$forEach: {
+					iterator: {
+						bar: {
+							'name': 'bar',
+							'nicknames': {
+								'main': 'barberator',
+								'secondary': 'barbarella',
+							},
+						},
+						baz: {
+							'name': 'baz',
+							'nicknames': {
+								'main': 'bazerator',
+								'secondary': 'big baz',
+							},
+						}
+					},
+					template: {
+						'$forEach.key': '$forEach.value.name',
+						'$forEach.key_nickname': '$forEach.value.nicknames.main'
+					}
+				}
+			}
+		});
+
+		expect(
+			() => plugin.replace()
+		).to.not.throw();
+
+		expect(serverless.service.custom).to.deep.equal({
+			'bar': 'bar',
+			'bar_nickname': 'barberator',
+			'baz': 'baz',
+			'baz_nickname': 'bazerator',
+		});
+	});
+
 	it('should flatten one level when replacing array item and template is an array', function() {
 		const { plugin, serverless } = createTestInstance({
 			custom: {
