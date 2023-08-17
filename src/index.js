@@ -106,10 +106,6 @@ class ForEachPlugin {
 				`Value: ${JSON.stringify(value)}\nTemplate: ${stringified}`
 			)
 
-			if (!nestedKeyMatches.length) {
-				throw new Error(ValueObjectErrorMsg);
-			}
-
 			for (const nestedKeyMatch of nestedKeyMatches) {
 				const nestedKey = nestedKeyMatch.groups.nestedKey;
 
